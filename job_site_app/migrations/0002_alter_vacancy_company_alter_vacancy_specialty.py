@@ -14,11 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='vacancy',
             name='company',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='company', to='job_site_app.company', verbose_name='Компания'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='company',
+                                    to='job_site_app.company', verbose_name='Компания'),
         ),
         migrations.AlterField(
             model_name='vacancy',
             name='specialty',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='specialty', to='job_site_app.specialty', verbose_name='Специальность'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='specialty',
+                                    to='job_site_app.specialty', verbose_name='Специальность'),
         ),
     ]

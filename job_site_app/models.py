@@ -4,12 +4,13 @@ from django.db import models
 class Vacancy(models.Model):
 
     title = models.CharField(max_length=50, verbose_name='Вакансия')
-    specialty = models.ForeignKey('Specialty', on_delete=models.CASCADE, related_name="specialty", verbose_name='Специальность')
+    specialty = models.ForeignKey('Specialty', on_delete=models.CASCADE, related_name="specialty",
+                                  verbose_name='Специальность')
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name="company", verbose_name='Компания')
     skills = models.TextField(verbose_name='Навыки')
     description = models.TextField(verbose_name='Описание')
-    salary_min = models.FloatField(verbose_name='Минимальня зарплата')
-    salary_max = models.FloatField(verbose_name='Максимальная зарплата')
+    salary_min = models.IntegerField(verbose_name='Минимальня зарплата')
+    salary_max = models.IntegerField(verbose_name='Максимальная зарплата')
     published_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
 
     def __str__(self):
@@ -51,5 +52,3 @@ class Specialty(models.Model):
         verbose_name_plural = 'Специальности'
         verbose_name = 'Специальность'
         ordering = ['title']
-
-

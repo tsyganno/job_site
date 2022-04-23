@@ -52,8 +52,10 @@ class Migration(migrations.Migration):
                 ('salary_min', models.FloatField(verbose_name='Минимальня зарплата')),
                 ('salary_max', models.FloatField(verbose_name='Максимальная зарплата')),
                 ('published_at', models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vacancies', to='job_site_app.company', verbose_name='Компания')),
-                ('specialty', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vacancies', to='job_site_app.specialty', verbose_name='Специальность')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vacancies',
+                                              to='job_site_app.company', verbose_name='Компания')),
+                ('specialty', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vacancies',
+                                                to='job_site_app.specialty', verbose_name='Специальность')),
             ],
             options={
                 'verbose_name': 'Вакансия',
