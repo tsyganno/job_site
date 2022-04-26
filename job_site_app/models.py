@@ -26,7 +26,7 @@ class Company(models.Model):
 
     name = models.CharField(max_length=50, verbose_name='Компания')
     location = models.CharField(max_length=50, verbose_name='Город')
-    logo = models.URLField(default='https://place-hold.it/100x60', verbose_name='Лого')
+    logo = models.ImageField(upload_to='job_site_app/static/logo/', verbose_name='Лого')
     description = models.TextField(verbose_name='Информация о компании')
     employee_count = models.IntegerField(verbose_name='Количество сотрудников')
 
@@ -43,7 +43,7 @@ class Specialty(models.Model):
 
     code = models.CharField(max_length=50, verbose_name='Специализация')
     title = models.CharField(max_length=50, verbose_name='Название')
-    picture = models.URLField(default='https://place-hold.it/100x60', verbose_name='Картинка')
+    picture = models.ImageField(upload_to='job_site_app/static/picture/', verbose_name='Картинка')
 
     def __str__(self):
         return self.title
