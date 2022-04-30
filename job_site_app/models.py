@@ -30,7 +30,7 @@ class Company(models.Model):
     logo = models.ImageField(upload_to='job_site_app/static/logo/', verbose_name='Лого')
     description = models.TextField(verbose_name='Информация о компании')
     employee_count = models.IntegerField(verbose_name='Количество сотрудников')
-    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name="owner", verbose_name='Владелец')
+    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE,  related_name="owner", verbose_name='Владелец')
 
     def __str__(self):
         return self.name

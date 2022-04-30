@@ -1,8 +1,10 @@
 from django.views.generic import CreateView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from django.db.models import Count
 
 from accounts.forms import UserRegisterForm
+from job_site_app.models import Company, Specialty
 
 
 class MySignupView(CreateView):
@@ -16,5 +18,3 @@ class MyLoginView(LoginView):
     template_name = 'accounts/login.html'
 
 
-class MyLogoutView(LogoutView):
-    template_name = 'job_site_app/index.html'
