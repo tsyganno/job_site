@@ -1,4 +1,4 @@
-from job_site_app.models import Vacancy, Specialty, Company
+from job_site_app.models import Vacancy, Specialty, Company, Application, User
 
 
 """ Вакансии """

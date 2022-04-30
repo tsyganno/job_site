@@ -24,6 +24,7 @@ handler500 = custom_handler500
 
 urlpatterns = [
     path('', include('job_site_app.urls')),
+    path('', include('accounts.urls')),
     path('admin/', admin.site.urls),
 ]
 

@@ -22,7 +22,20 @@
         </ul>
         <ul class="navbar-nav col-2 justify-content-end">
           <li class="nav-item active">
-            <a href="#" class="nav-link font-weight-bold">Вход</a>
+
+            {% if user.is_authenticated %}
+            <li class="nav-link">{{ user.first_name }} {{ user.last_name }}</li>
+            <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            {{ form.id_vote }}
+              <button id="id_vote" type="submit">Выйти</button>
+            </form>
+            {% else %}
+            <a href="{% url 'accounts:login' %}" class="nav-link font-weight-bold">Вход</a>
+
+            {% endif %}
+
+
           </li>
         </ul>
       </div>

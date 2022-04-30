@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Vacancy(models.Model):
@@ -29,6 +30,7 @@ class Company(models.Model):
     logo = models.ImageField(upload_to='job_site_app/static/logo/', verbose_name='Лого')
     description = models.TextField(verbose_name='Информация о компании')
     employee_count = models.IntegerField(verbose_name='Количество сотрудников')
+    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name="owner", verbose_name='Владелец')
 
     def __str__(self):
         return self.name
@@ -52,3 +54,20 @@ class Specialty(models.Model):
         verbose_name_plural = 'Специальности'
         verbose_name = 'Специальность'
         ordering = ['title']
+
+
+class Application(models.Model):
+
+    written_username = models.CharField(max_length=50, default='DEFAULT VALUE', verbose_name='Имя')
+    written_phone = models.CharField(max_length=50, default='DEFAULT VALUE', verbose_name='Телефон')
+    written_cover_letter = models.TextField(default='DEFAULT VALUE', verbose_name='Сопроводительное письмо')
+    vacancy = models.ForeignKey('Vacancy', on_delete=models.CASCADE, related_name="applications", verbose_name='Вакансия')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications", verbose_name='Пользователь')
+
+    def __str__(self):
+        return self.written_username
+
+    class Meta:
+        verbose_name_plural = 'Отклики'
+        verbose_name = 'Отклик'
+        ordering = ['written_username']

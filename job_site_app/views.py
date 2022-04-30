@@ -34,14 +34,14 @@ class VacancyListView(ListView):
         return context
 
 
-class SpecialtyDetailView(DetailView):
+class SpecialtyListView(ListView):
     model = Vacancy
     template_name = 'job_site_app/vacancies.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SpecialtyDetailView, self).get_context_data(**kwargs)
-        context['vacancies'] = Vacancy.objects.filter(specialty=self.kwargs['pk'])
-        context['special'] = Specialty.objects.get(id=self.kwargs['pk'])
+        context = super(SpecialtyListView, self).get_context_data(**kwargs)
+        context['vacancies'] = Vacancy.objects.filter(specialty__code=self.kwargs['spec'])
+        context['special'] = Specialty.objects.get(code=self.kwargs['spec'])
         return context
 
 
