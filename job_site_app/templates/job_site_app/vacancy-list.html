@@ -40,7 +40,8 @@
                       <p class="mb-1">
                         <span class="mr-4">Зарплата: от {{ vacancy.salary_min }} р. до {{ vacancy.salary_max }} р. </span>
                         <br>
-                        <a href="{% url 'job:edit_vacancy' vacancy.pk %}" class="text-info">Количество откликов: {{ vacancy.count_application }}</a>
+                        <a href="{% url 'job:edit_vacancy' vacancy.pk %}" class="text-info">Количество откликов:
+                          {{ vacancy.count_application }}</a>
                       </p>
                     </div>
                     <div class="col-6 col-lg-4 text-right">

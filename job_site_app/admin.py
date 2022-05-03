@@ -1,5 +1,5 @@
 from django.contrib import admin
-from job_site_app.models import Vacancy, Company, Specialty, Application
+from job_site_app.models import Vacancy, Company, Specialty, Application, Resume
 
 
 class VacancyAdmin(admin.ModelAdmin):
@@ -26,7 +26,14 @@ class ApplicationAdmin(admin.ModelAdmin):
     search_fields = ('written_username', 'written_phone',)
 
 
+class ResumeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'surname', 'status', 'salary', 'grade', 'education', 'experience', 'portfolio')
+    list_display_links = ('name', 'surname')
+    search_fields = ('name', 'surname',)
+
+
 admin.site.register(Vacancy, VacancyAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Specialty, SpecialtyAdmin)
 admin.site.register(Application, ApplicationAdmin)
+admin.site.register(Resume, ResumeAdmin)

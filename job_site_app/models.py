@@ -30,7 +30,8 @@ class Company(models.Model):
     logo = models.ImageField(upload_to='job_site_app/static/logo/', verbose_name='Лого')
     description = models.TextField(verbose_name='Информация о компании')
     employee_count = models.IntegerField(verbose_name='Количество сотрудников')
-    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE,  related_name="owner", verbose_name='Владелец')
+    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE,  related_name="owner",
+                                 verbose_name='Владелец')
 
     def __str__(self):
         return self.name
@@ -61,7 +62,8 @@ class Application(models.Model):
     written_username = models.CharField(max_length=50, verbose_name='Имя')
     written_phone = models.CharField(max_length=50, verbose_name='Телефон')
     written_cover_letter = models.TextField(verbose_name='Сопроводительное письмо')
-    vacancy = models.ForeignKey('Vacancy', on_delete=models.CASCADE, related_name="applications", verbose_name='Вакансия')
+    vacancy = models.ForeignKey('Vacancy', on_delete=models.CASCADE, related_name="applications",
+                                verbose_name='Вакансия')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications", verbose_name='Пользователь')
 
     def __str__(self):
@@ -92,7 +94,8 @@ class Resume(models.Model):
     )
     status = models.CharField(max_length=50, choices=STATUS)
     salary = models.IntegerField(verbose_name='Вознаграждение')
-    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name="resumes", verbose_name='Специализация')
+    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name="resumes",
+                                  verbose_name='Специализация')
     grade = models.CharField(max_length=50, choices=GRADE)
     education = models.TextField(verbose_name='Образование')
     experience = models.TextField(verbose_name='Опыт работы')

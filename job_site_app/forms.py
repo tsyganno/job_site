@@ -1,7 +1,5 @@
-from django.forms import ModelForm
 from django import forms
 from job_site_app.models import Company, Vacancy, Application, Resume
-from django.forms import TextInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 

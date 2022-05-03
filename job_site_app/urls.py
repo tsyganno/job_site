@@ -2,7 +2,7 @@ from django.urls import path
 from job_site_app.views import IndexView, SpecialtyListView, CompanyDetailView, VacancyListView, \
     choice, LetsstartIndexView, CompanyCreateView, EditCompanyCreateView, UserVacancyIndexView, getting_information, \
     StartVacancyIndexView, VacancyCreateView, EditVacancyCreateView, CheckView, ApplicationCreateView, availability, \
-    LetsstartResumeIndexView, ResumeCreateView, EditResumeCreateView
+    LetsstartResumeIndexView, ResumeCreateView, EditResumeCreateView, SearchView
 
 
 app_name = 'job'
@@ -22,10 +22,9 @@ urlpatterns = [
     path('mycompany/<str:name_company>/', EditCompanyCreateView.as_view(), name='my_company'),
     path('mycompany/vacancies/create/vacancy', VacancyCreateView.as_view(), name='add_vacancy'),
     path('mycompany/vacancies/<int:pk>/', EditVacancyCreateView.as_view(), name='edit_vacancy'),
-
     path('availability_of_a_resume/<int:pk>/', availability, name='availability'),
     path('myresume/letsstart/', LetsstartResumeIndexView.as_view(), name='letsstart_resume'),
     path('myresume/create/', ResumeCreateView.as_view(), name='create_resume'),
     path('myresume/', EditResumeCreateView.as_view(), name='my_resume'),
-
+    path('search/', SearchView.as_view(), name='search'),
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse
 from django.db.models import Count
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -7,14 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from django.http import Http404
-from django.utils.translation import gettext as _
-
-
-from django.views.generic.edit import FormMixin
-from django.urls import reverse
-
+from django.db.models import Q
 
 from job_site_app.models import Vacancy, Company, Specialty, Application, Resume
 from job_site_app.forms import CompanyForm, VacancyForm, ApplicationForm, ResumeForm
@@ -28,6 +21,16 @@ def custom_handler500(request):
     return HttpResponseServerError('Ошибка сервера!')
 
 
+class SearchView(ListView, View):
+    template_name = 'job_site_app/search.html'
+
+    def get(self, request):
+        query = self.request.GET.get('q')
+        object_list = Vacancy.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        context = {'object_list': object_list, 'query': query}
+        return render(request, self.template_name, context)
 
 
 def availability(request, pk: int):
@@ -68,21 +71,6 @@ class ResumeCreateView(CreateView, LoginRequiredMixin):
 class LetsstartResumeIndexView(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     template_name = 'job_site_app/resume-create.html'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class CheckView(TemplateView):
@@ -159,14 +147,15 @@ class UserVacancyIndexView(LoginRequiredMixin, TemplateView):
         context = super(UserVacancyIndexView, self).get_context_data(**kwargs)
         pk_user = self.request.user.pk
         context['user_company'] = str(Company.objects.filter(owner_id=pk_user).first().name)
-        context['user_vacancies'] = Vacancy.objects.filter(company__owner_id=pk_user).annotate(count_application=Count('applications'))
+        context['user_vacancies'] = \
+            Vacancy.objects.filter(company__owner_id=pk_user).annotate(count_application=Count('applications'))
         return context
 
 
 def getting_information(request, pk: int):
     user_vacancies = Vacancy.objects.filter(company__owner_id=pk)
     if len(user_vacancies) > 0:
-            return redirect('job:user_vacancies')
+        return redirect('job:user_vacancies')
     return redirect('job:start_vacancy')
 
 
@@ -266,7 +255,3 @@ class CompanyDetailView(DetailView):
         context = super(CompanyDetailView, self).get_context_data(**kwargs)
         context['vacancies'] = Vacancy.objects.filter(company=self.kwargs['pk'])
         return context
-
-
-
-
