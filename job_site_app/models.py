@@ -71,3 +71,29 @@ class Application(models.Model):
         verbose_name_plural = 'Отклики'
         verbose_name = 'Отклик'
         ordering = ['written_username']
+
+
+class Resume(models.Model):
+
+    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE, verbose_name='Пользователь')
+    name = models.CharField(max_length=50, verbose_name='Имя')
+    surname = models.CharField(max_length=50, verbose_name='Фамилия')
+    STATUS = (
+        ('not_looking', 'Не ищу работу'),
+        ('considering', 'Рассматриваю предложения'),
+        ('looking', 'Ищу работу'),
+    )
+    GRADE = (
+        ('intern', 'Стажер'),
+        ('junior', 'Джуниор'),
+        ('middle', 'Миддл'),
+        ('senior', 'Синьор'),
+        ('lead', 'Лид'),
+    )
+    status = models.CharField(max_length=50, choices=STATUS)
+    salary = models.IntegerField(verbose_name='Вознаграждение')
+    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name="resumes", verbose_name='Специализация')
+    grade = models.CharField(max_length=50, choices=GRADE)
+    education = models.TextField(verbose_name='Образование')
+    experience = models.TextField(verbose_name='Опыт работы')
+    portfolio = models.URLField()

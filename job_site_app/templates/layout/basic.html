@@ -33,8 +33,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.first_name }} {{ user.last_name }}</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Профиль</a>
-                <a class="dropdown-item" href="#">Резюме</a>
+                <a class="dropdown-item" href="{% url 'job:availability' user.pk %}">Резюме</a>
                 <a class="dropdown-item" href="{% url 'job:choice' user.pk %}">Компания</a>
               <form action="{% url 'accounts:logout' %}?next=/" method="POST">
                 {% csrf_token %}

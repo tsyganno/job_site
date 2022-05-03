@@ -1,9 +1,38 @@
 from django.forms import ModelForm
 from django import forms
-from job_site_app.models import Company, Vacancy, Application
+from job_site_app.models import Company, Vacancy, Application, Resume
 from django.forms import TextInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+
+
+class ResumeForm(forms.ModelForm):
+
+    class Meta:
+        model = Resume
+
+        fields = ('name', 'surname', 'status', 'salary', 'specialty', 'grade', 'education', 'experience', 'portfolio')
+
+    def __init__(self, *args, **kwargs):
+        super(ResumeForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                'name',
+                'surname',
+                'status',
+                'salary',
+                'specialty',
+                'grade',
+                'education',
+                'experience',
+                'portfolio',
+            ),
+            ButtonHolder(Submit('submit', 'Сохранить'))
+        )
 
 
 class ApplicationForm(forms.ModelForm):

@@ -16,8 +16,8 @@ from django.views.generic.edit import FormMixin
 from django.urls import reverse
 
 
-from job_site_app.models import Vacancy, Company, Specialty, Application
-from job_site_app.forms import CompanyForm, VacancyForm, ApplicationForm
+from job_site_app.models import Vacancy, Company, Specialty, Application, Resume
+from job_site_app.forms import CompanyForm, VacancyForm, ApplicationForm, ResumeForm
 
 
 def custom_handler404(request, exception):
@@ -26,6 +26,62 @@ def custom_handler404(request, exception):
 
 def custom_handler500(request):
     return HttpResponseServerError('Ошибка сервера!')
+
+
+
+
+def availability(request, pk: int):
+    user_resume = Resume.objects.filter(owner_id=pk)
+    if len(user_resume) > 0:
+        return redirect('job:my_resume')
+    return redirect('job:letsstart_resume')
+
+
+class EditResumeCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    login_url = 'login'
+    template_name = 'job_site_app/resume-edit.html'
+    success_message = 'Информация обновлена!'
+    model = Resume
+    form_class = ResumeForm
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(owner=self.request.user)
+
+    def get_success_url(self):
+        return reverse("job:my_resume")
+
+
+class ResumeCreateView(CreateView, LoginRequiredMixin):
+    login_url = 'login'
+    template_name = 'job_site_app/resume-create.html'
+    form_class = ResumeForm
+    model = Resume
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super(ResumeCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse("job:my_resume")
+
+
+class LetsstartResumeIndexView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    template_name = 'job_site_app/resume-create.html'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
