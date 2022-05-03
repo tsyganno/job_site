@@ -1,5 +1,5 @@
 {% extends "layout/basic.html" %}
-
+{% load crispy_forms_tags %}
 {% block title %}Создать карточку компании | Джуманджи{% endblock %}
 
 {% block css %}
@@ -21,7 +21,7 @@ body {
 
         <form method="post" enctype="multipart/form-data" action="{% url 'job:add_company' %}">
         {% csrf_token %}
-        {{ form|as_p  }}
+        {{ form|crispy  }}
             <input type="submit" class="btn btn-info mb-2" value="Создать карточку компании">
         </form>
 

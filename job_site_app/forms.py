@@ -1,9 +1,58 @@
 from django.forms import ModelForm
 from django import forms
-from job_site_app.models import Company
+from job_site_app.models import Company, Vacancy, Application
 from django.forms import TextInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+
+
+class ApplicationForm(forms.ModelForm):
+
+    class Meta:
+        model = Application
+
+        fields = ('written_username', 'written_phone', 'written_cover_letter')
+
+    def __init__(self, *args, **kwargs):
+        super(ApplicationForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                'written_username',
+                'written_phone',
+                'written_cover_letter',
+            ),
+            ButtonHolder(Submit('submit', 'Отправить отклик'))
+        )
+
+
+class VacancyForm(forms.ModelForm):
+
+    class Meta:
+        model = Vacancy
+
+        fields = ('title', 'specialty', 'skills', 'description', 'salary_min', 'salary_max')
+
+    def __init__(self, *args, **kwargs):
+        super(VacancyForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                'title',
+                'specialty',
+                'skills',
+                'description',
+                'salary_min',
+                'salary_max',
+            ),
+            ButtonHolder(Submit('submit', 'Сохранить'))
+        )
 
 
 class CompanyForm(forms.ModelForm):

@@ -58,9 +58,9 @@ class Specialty(models.Model):
 
 class Application(models.Model):
 
-    written_username = models.CharField(max_length=50, default='DEFAULT VALUE', verbose_name='Имя')
-    written_phone = models.CharField(max_length=50, default='DEFAULT VALUE', verbose_name='Телефон')
-    written_cover_letter = models.TextField(default='DEFAULT VALUE', verbose_name='Сопроводительное письмо')
+    written_username = models.CharField(max_length=50, verbose_name='Имя')
+    written_phone = models.CharField(max_length=50, verbose_name='Телефон')
+    written_cover_letter = models.TextField(verbose_name='Сопроводительное письмо')
     vacancy = models.ForeignKey('Vacancy', on_delete=models.CASCADE, related_name="applications", verbose_name='Вакансия')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications", verbose_name='Пользователь')
 
