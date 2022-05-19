@@ -21,7 +21,8 @@ def custom_handler500(request):
     return HttpResponseServerError('Ошибка сервера!')
 
 
-class SearchView(ListView, View):
+class SearchView(LoginRequiredMixin, ListView, View):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/search.html'
 
     def get(self, request):
@@ -40,8 +41,8 @@ def availability(request, pk: int):
     return redirect('job:letsstart_resume')
 
 
-class EditResumeCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
-    login_url = 'login'
+class EditResumeCreateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/resume-edit.html'
     success_message = 'Информация обновлена!'
     model = Resume
@@ -54,8 +55,8 @@ class EditResumeCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse("job:my_resume")
 
 
-class ResumeCreateView(CreateView, LoginRequiredMixin):
-    login_url = 'login'
+class ResumeCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/resume-create.html'
     form_class = ResumeForm
     model = Resume
@@ -69,16 +70,17 @@ class ResumeCreateView(CreateView, LoginRequiredMixin):
 
 
 class LetsstartResumeIndexView(LoginRequiredMixin, TemplateView):
-    login_url = 'login'
+    login_url = 'accounts:login'
     template_name = 'job_site_app/resume-create.html'
 
 
-class CheckView(TemplateView):
+class CheckView(LoginRequiredMixin, TemplateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/send.html'
 
 
-class ApplicationCreateView(CreateView, LoginRequiredMixin):
-    login_url = 'login'
+class ApplicationCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/vacancy.html'
     form_class = ApplicationForm
     model = Application
@@ -97,8 +99,8 @@ class ApplicationCreateView(CreateView, LoginRequiredMixin):
         return reverse("job:send")
 
 
-class EditVacancyCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
-    login_url = 'login'
+class EditVacancyCreateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/vacancy-edit.html'
     success_message = 'Информация о вакансии обновлена!'
     model = Vacancy
@@ -118,8 +120,8 @@ class EditVacancyCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
         return reverse("job:edit_vacancy", kwargs={"pk": vacancy.pk})
 
 
-class VacancyCreateView(CreateView, LoginRequiredMixin):
-    login_url = 'login'
+class VacancyCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/vacancy-create.html'
     form_class = VacancyForm
     model = Vacancy
@@ -140,7 +142,7 @@ class VacancyCreateView(CreateView, LoginRequiredMixin):
 
 
 class UserVacancyIndexView(LoginRequiredMixin, TemplateView):
-    login_url = 'login'
+    login_url = 'accounts:login'
     template_name = 'job_site_app/vacancy-list.html'
 
     def get_context_data(self, **kwargs):
@@ -159,8 +161,8 @@ def getting_information(request, pk: int):
     return redirect('job:start_vacancy')
 
 
-class StartVacancyIndexView(TemplateView, LoginRequiredMixin):
-    login_url = 'login'
+class StartVacancyIndexView(LoginRequiredMixin, TemplateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/vacancy-create.html'
 
     def get_context_data(self, **kwargs):
@@ -170,8 +172,8 @@ class StartVacancyIndexView(TemplateView, LoginRequiredMixin):
         return context
 
 
-class EditCompanyCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
-    login_url = 'login'
+class EditCompanyCreateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/company-edit.html'
     success_message = 'Информация о компании обновлена!'
     model = Company
@@ -186,8 +188,8 @@ class EditCompanyCreateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
         return reverse("job:my_company", kwargs={"name_company": company.name})
 
 
-class CompanyCreateView(CreateView, LoginRequiredMixin):
-    login_url = 'login'
+class CompanyCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/company-create.html'
     form_class = CompanyForm
     model = Company
@@ -202,8 +204,8 @@ class CompanyCreateView(CreateView, LoginRequiredMixin):
         return reverse("job:my_company", kwargs={"name_company": company.name})
 
 
-class LetsstartIndexView(TemplateView, LoginRequiredMixin):
-    login_url = 'login'
+class LetsstartIndexView(LoginRequiredMixin, TemplateView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/company-create.html'
 
 
@@ -226,7 +228,8 @@ class IndexView(TemplateView):
         return context
 
 
-class VacancyListView(ListView):
+class VacancyListView(LoginRequiredMixin, ListView):
+    login_url = 'accounts:login'
     template_name = 'job_site_app/vacancies.html'
     model = Vacancy
 
@@ -236,7 +239,8 @@ class VacancyListView(ListView):
         return context
 
 
-class SpecialtyListView(ListView):
+class SpecialtyListView(LoginRequiredMixin, ListView):
+    login_url = 'accounts:login'
     model = Vacancy
     template_name = 'job_site_app/vacancies.html'
 
@@ -247,7 +251,8 @@ class SpecialtyListView(ListView):
         return context
 
 
-class CompanyDetailView(DetailView):
+class CompanyDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'accounts:login'
     model = Company
     template_name = 'job_site_app/company.html'
 
